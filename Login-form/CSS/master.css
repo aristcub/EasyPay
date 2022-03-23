@@ -60,6 +60,10 @@ body {
   font-size: 16px;
 }
 
+.login-box input[type="text"]::placeholder, .login-box input[type="password"]::placeholder{
+  color: #ddd;
+}
+
 .login-box input[type="submit"] {
   border: none;
   outline: none;
