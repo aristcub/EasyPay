@@ -45,7 +45,7 @@ function signIn(event){
         if(data.message) console.log("User not found / Verify your credentials")
         else{
             sessionStorage.setItem("user", JSON.stringify(data[0]));
-            location.href = "./../Home/index.html";
+            location.href = "./../Home/index.html"; 
         }
     })
 }
