@@ -34,7 +34,7 @@ function doTransaction(){
     .then(data => console.log(data));
 }
 
-function signIn(event){
+function signIn(event){ // iniciae sesion 
     const userId = event.elements.userId.value;
     
     fetch(`http://localhost:3000/users/${userId}`, { 
@@ -50,7 +50,7 @@ function signIn(event){
     })
 }
 
-window.load = () => {
+window.load = () => { // evento a la pagina para que no recargue la pagina 
     const form = document.getElementById("loginForm");
     function handleForm(event) { event.preventDefault();  } 
     form.addEventListener('submit', handleForm);
