@@ -12,7 +12,7 @@
         .then(data => saldoActual = parseInt(data.saldo) || 0);
     }
 
-    async function __loadSessionData() {
+    async function __loadSessionData() { // obtiene la informacion despues de iniciar sesion 
         const userData = JSON.parse(sessionStorage.getItem("user"))
         const id = document.querySelector(".id");
         const username = document.querySelector(".username");
