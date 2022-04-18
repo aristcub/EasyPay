@@ -44,7 +44,7 @@
                     <div class="view" data-route="">
                         <div class="container">
                             <div class="data-group">
-                                Current Balance<span class="balance"></span>
+                                Saldo actual <span class="balance"></span>
                             </div>
                         </div>
                     </div>
@@ -53,17 +53,17 @@
                         <div class="container">
                             <div class="form-group">
                                 <label for="time">
-                                    Parking time
+                                    Tiempo de parqueo
                                     <input type="number" name="time" value="0" onchange="calculateTotal()" id="time"/>
                                 </label>
                             </div>
 
                             <div class="form-group">
                                 <label for="vehicle">
-                                    Type of vehicle 
+                                    Tipo de vehiculo
                                     <select>
-                                        <option value="car">Cart </option>
-                                        <option value="motocycle">Motorcycle </option>
+                                        <option value="car">Carro</option>
+                                        <option value="motocycle">Motocicleta</option>
                                     </select>
                                 </label>
                             </div>
@@ -73,14 +73,20 @@
                             </div>
 
                             <div class="form-group">
-                                <button type="button">Pay</button>
+                                <button type="button">Pagar</button>
                             </div>
                         </div>
                     </div>
 
                     <div class="view" data-route="top-up">
-                        Top Up is working!
-                        <button onclick="logout()">Log out</button>
+                        <div class="container">
+                            <div class="form-group">
+                                <button type="button" onclick="location.href='../Pago/PSE.html'">Pagar con PSE</button>
+                            </div>
+                            <div class="form-group">
+                                <button type="button" onclick="location.href='../Pago/TarjetaCredito.html'">Pagar con <br> Tarjeta de Credito</button>
+                            </div>
+                        </div>
                     </div>
 
                 </div> 
