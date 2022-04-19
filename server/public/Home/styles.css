@@ -11,10 +11,18 @@
     margin: 0; 
     padding: 0;
     font-family: 'Urbanist', sans-serif;
+    z-index: 1;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    top: 12px;
 }
 
 nav {
     display: -webkit-box;
+    z-index: 3000;
 }
 
 .nav{
@@ -88,7 +96,7 @@ nav {
 .dashboard {
     display: flex;
     width: 100%;
-    height: calc(100vh - 66px);  
+    height: calc(100vh - 78px);  
     justify-content: center; 
     align-items: center;
 }
@@ -176,4 +184,75 @@ nav {
 
 .show-view {
     display: block;
+}
+.pop-up.active{
+    display: flex;
+}
+
+.pop-up{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    order: 0;
+    display: none;
+    justify-content:center;
+    align-items:center;
+}
+
+.bg-pop-up{
+    background: rgb(0,0,0,0.28);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.pop-up-body{
+    background: white;
+    width: max-content;
+    padding: 1.2rem 0rem;
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+}
+
+.primary-btn{
+    background: var(--primary-bg-color);
+    color: white;
+    cursor: pointer;
+    padding: .8rem 1rem;
+    border: 1px solid  var(--primary-bg-color);
+}
+
+.secondary-btn{
+    color: var(--primary-bg-color);
+    border: 1px solid var(--primary-bg-color);
+    background: white;
+    cursor: pointer;
+    padding: .8rem 1rem;
+}
+
+.pop-up-title{
+    padding: 0rem .8rem;
+    padding-bottom: 1.2rem;
+    border-bottom: 1px solid rgb(204, 204, 204);
+}
+
+.pop-up-content{
+    padding: 0rem .8rem;
+    padding-bottom: 1.2rem;
+    border-bottom: 1px solid rgb(204, 204, 204);
+    display: grid;
+    grid-template-rows: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.total{
+    text-align: center;
+}
+
+.pop-up-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    padding: 0rem .8rem;
 }

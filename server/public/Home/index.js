@@ -1,89 +1,81 @@
 (() => {
+  if (!sessionStorage.getItem("user")) location.href = "./../Login-form/";
+  
+  async function getSaldo(id) {
+    return fetch(`http://localhost:3000/saldo/${id}`, {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((data) => (saldoActual = parseInt(data.saldo) || 0));
+  }
 
-    if(!sessionStorage.getItem("user"))
-        location.href = "./../Login-form/";
+  async function __loadSessionData() {
+    const userData = JSON.parse(sessionStorage.getItem("user"));
+    const id = document.querySelector(".id");
+    const username = document.querySelector(".username");
+    const balance = document.querySelector(".balance");
+    const saldo = await getSaldo(userData.id);
 
-    async function getSaldo(id){
+    id.innerHTML = userData.id;
+    balance.innerHTML = "$ " + saldo;
+    username.innerHTML = userData.name + " " + userData.surname;
+  }
 
-        return fetch(`http://localhost:3000/saldo/${id}`, {
-            method: 'GET'
-        })
-        .then(res => res.json())
-        .then(data => saldoActual = parseInt(data.saldo) || 0);
-    }
+  function __generateNavegableContent() {
+    const routes = document.querySelectorAll(".route");
+    const views = document.querySelectorAll(".view");
 
-    async function __loadSessionData() {
-        const userData = JSON.parse(sessionStorage.getItem("user"));
-        const id = document.querySelector(".id");
-        const username = document.querySelector(".username");
-        const balance = document.querySelector(".balance");
-        const saldo = await getSaldo(userData.id);
-        
-        id.innerHTML = userData.id;
-        balance.innerHTML = "$ " + saldo;
-        username.innerHTML = userData.name + " " + userData.surname;
-    }
+    let currentRoute = window.location.hash.substring(1);
 
-    function __generateNavegableContent() {
-        const routes = document.querySelectorAll(".route");
-        const views = document.querySelectorAll(".view");
+    const resetRoutes = (event) => {
+      currentRoute = event.target.parentNode.dataset.route;
 
-        let currentRoute = window.location.hash.substring(1);
-
-        const resetRoutes  = (event) => {
-            currentRoute = event.target.parentNode.dataset.route;
-            
-            routes.forEach( (route, index) => {
-                if(currentRoute === route.dataset.route){
-                    route.classList.add("active")
-                    views[index].classList.add("show-view")
-                }else{ 
-                    route.classList.remove("active")
-                    views[index].classList.remove("show-view")
-                }
-            })
+      routes.forEach((route, index) => {
+        if (currentRoute === route.dataset.route) {
+          route.classList.add("active");
+          views[index].classList.add("show-view");
+        } else {
+          route.classList.remove("active");
+          views[index].classList.remove("show-view");
         }
+      });
+    };
 
-        routes.forEach( route => {
-            if(currentRoute === route.dataset.route)
-                route.classList.add("active")
-            else 
-                route.classList.remove("active")
+    routes.forEach((route) => {
+      if (currentRoute === route.dataset.route) route.classList.add("active");
+      else route.classList.remove("active");
 
-            route.innerHTML = `<a href="#${route.dataset.route}" class="route-link" >${route.innerText}</a>`;
-            route.firstChild.addEventListener("click", resetRoutes);
-        });
+      route.innerHTML = `<a href="#${route.dataset.route}" class="route-link" >${route.innerText}</a>`;
+      route.firstChild.addEventListener("click", resetRoutes);
+    });
 
-        views.forEach( view => {
-            if(currentRoute === view.dataset.route)
-                view.classList.add("show-view")
-            else 
-                view.classList.remove("show-view")
-        });
+    views.forEach((view) => {
+      if (currentRoute === view.dataset.route) view.classList.add("show-view");
+      else view.classList.remove("show-view");
+    });
+  }
 
-    }
-
-    __loadSessionData();
-    __generateNavegableContent();
+  __loadSessionData();
+  __generateNavegableContent();
 })();
 
-function calculateTotal(){
-    const time = document.getElementById("time").value;
-    const vehicle = document.getElementById("vehicle").value;
-    var RATE = 0;
-    if(vehicle=="car"){
-        RATE = 500;
-    }else{
-        RATE = 200;
-    }
-    console.log(vehicle);
-console.log(time);
-    const total = document.querySelector(".total");
+function calculateTotal() {
+  const time = document.getElementById("time").value;
+  const vehicle = document.getElementById("vehicle").value;
+  var RATE = 0;
+  if (vehicle == "car") {
+    RATE = 500;
+  } else {
+    RATE = 200;
+  }
+  const totals = document.querySelectorAll(".total");
+  totals.forEach(total => {
     total.innerText = `$ ${RATE * time}`;
-    total.value =  `$ ${RATE * time}`;
+    total.value = `$ ${RATE * time}`;
+  })
 }
 
-function logout(){
-    sessionStorage.removeItem("user");
-    location.href = "./../Login-form"
+function logout() {
+  sessionStorage.removeItem("user");
+  location.href = "./../Login-form";
 }

@@ -9,7 +9,7 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(express.json());
+app.use(express.json()); // configuraciones del servidor - New change 
 app.use(express.urlencoded({ extended: true }));
 //No cors
 app.use(function(req, res, next) {
@@ -18,6 +18,7 @@ app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
     next();
 });
+// resiviendo los parametros 
 
 
 //Routes
@@ -35,6 +36,7 @@ app.use(function(req, res, next) {
 // });
 
 //Get user by id
+// app crea una ruta para nuestro servidor que resive parametros 
 app.get('/users/:id', (req, res) => {
     connection.query('SELECT * FROM users WHERE id = ?', [req.params.id], (err, rows) => {
         if (err) throw err;
@@ -49,7 +51,7 @@ app.post('/transacciones', (req, res) => {
     });
 });
 
-app.post('/transaccion', (req, res) => {
+app.post('/transaccion', (req, res) => {// realiza pago o recarga 
 
     const { body } = req;
     const { id, saldo } = body;
@@ -61,42 +63,23 @@ app.post('/transaccion', (req, res) => {
 });
 
 
-app.get('/saldo/:id', (req, res) => {
-    connection.query('SELECT saldo FROM users WHERE id = ?', [req.params.id] , (err, rows) => {
+app.get('/saldo/:id', (req, res) => {// consultar el saldo 
+    connection.query('SELECT SUM(saldo) as saldo FROM transacciones WHERE id_user = ?', [req.params.id] , (err, rows) => {
         if (err) throw err;
         res.send(rows.length == 0 ? { saldo: 0} : rows[0]);
     });
 });
 
 //Start server
-app.listen(port, () => {
+app.listen(port, () => { // inicializar el servidor y cerrarlo 
     console.log(`Server started on port ${port}`);
 });
 
 //Close server and database connection
-process.on('SIGINT', () => {
+process.on('SIGINT', () => { // cerrar la base de datos y el servidor
     connection.end(() => {
         console.log('Connection closed');
         process.exit();
     });
 });
 
-
-//Actualizar Saldo--------------------------------------
-app.post('/actSaldo', (req) => {
-    const { body } = req;
-    const { saldo, id } = body;
-    connection.query('UPDATE users SET saldo = saldo + ? WHERE id = ?', [saldo, id], (err, results) => {
-        if (err) throw err;
-        console.log('Actualizado', results);
-    });
-});
-//Pagar parqueadero--------------------------------------
-app.post('/pagar', (req) => {
-    const { body } = req;
-    const { total, id } = body;
-    connection.query('UPDATE users SET saldo = saldo - ? WHERE id = ?', [total, id], (err, results) => {
-        if (err) throw err;
-        console.log('Actualizado', results);
-    });
-});
