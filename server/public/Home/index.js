@@ -13,7 +13,7 @@
     }
 
     async function __loadSessionData() {
-        const userData = JSON.parse(sessionStorage.getItem("user"))
+        const userData = JSON.parse(sessionStorage.getItem("user"));
         const id = document.querySelector(".id");
         const username = document.querySelector(".username");
         const balance = document.querySelector(".balance");
@@ -69,10 +69,18 @@
 
 function calculateTotal(){
     const time = document.getElementById("time").value;
-    const RATE = 200;
-console.log(time)
+    const vehicle = document.getElementById("vehicle").value;
+    var RATE = 0;
+    if(vehicle=="car"){
+        RATE = 500;
+    }else{
+        RATE = 200;
+    }
+    console.log(vehicle);
+console.log(time);
     const total = document.querySelector(".total");
     total.innerText = `$ ${RATE * time}`;
+    total.value =  `$ ${RATE * time}`;
 }
 
 function logout(){

@@ -8,15 +8,26 @@
     <link rel="stylesheet" href="CSS/master.css">
 </head>
 <body>   
+    <main>
         <div class="login-box">
-        <img class="avatar"src="img/logo.jpeg" alt="Logo de EasyPay" title="EasyPay"> 
-        <h1>Your payment has been confirmed</h1>
-        <h2>Your new balance:</h2>
-
-        <form> 
-        
-            <input type="button" value="Top up again">
-            <input type="button" value="Finish">
+            <img class="avatar"src="img/logo.jpeg" alt="Logo de EasyPay" title="EasyPay"> 
+            <h1>Your payment has been confirmed</h1>
+            <div class="routeViewer">
+                <div class="view" data-route="">
+                    <div class="container">
+                        <div class="data-group">
+                            <h2>Your new balance:</h2> 
+                            <span class="balance"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            
+                <input type="button" value="Top up again">
+                <input type="button" value="Finish">
+    </main>
+    <script src='./../Home/index.js'></script> 
     
 </body>
 </html>

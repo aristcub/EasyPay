@@ -1,6 +1,6 @@
 let saldoActual;
 
-function getTransactions(){
+function getTransactions() {
     const id = document.getElementById('userId').value;
 
     fetch('http://localhost:3000/transacciones', {
@@ -12,11 +12,11 @@ function getTransactions(){
         },
         body: JSON.stringify({ id }),
     })
-    .then(res => res.json())
-    .then(data => console.log(data));
+        .then(res => res.json())
+        .then(data => console.log(data));
 }
 
-function doTransaction(){
+function doTransaction() {
 
     const id = document.getElementById('userId').value;
     const saldo = document.getElementById('saldo').value;
@@ -28,31 +28,100 @@ function doTransaction(){
             'Connection': 'keep-alive',
             'Accept': '*',
         },
-        body: JSON.stringify({ id, saldo}),
+        body: JSON.stringify({ id, saldo }),
     })
-    .then(res => res.json())
-    .then(data => console.log(data));
+        .then(res => res.json())
+        .then(data => console.log(data));
 }
 
-function signIn(event){ // iniciae sesion 
+function signIn(event) {
     const userId = event.elements.userId.value;
-    
-    fetch(`http://localhost:3000/users/${userId}`, { 
+
+    fetch(`http://localhost:3000/users/${userId}`, {
         method: "GET"
     })
-    .then( res => res.json() )
-    .then( data => {
-        if(data.message) console.log("User not found / Verify your credentials")
-        else{
-            sessionStorage.setItem("user", JSON.stringify(data[0]));
-            location.href = "./../Home/index.html"; 
+        .then(res => res.json())
+        .then(data => {
+            if (data.message) console.log("User not found / Verify your credentials")
+            else {
+                sessionStorage.setItem("user", JSON.stringify(data[0]));
+                location.href = "./../Home/index.html";
+            }
+        })
+}
+
+window.load = () => {
+    const form = document.getElementById("loginForm");
+    function handleForm(event) { event.preventDefault(); }
+    form.addEventListener('submit', handleForm);
+
+}
+//recargar----------------------------------
+function recarga() {
+    const id = document.getElementById('id').value;
+    const saldo = document.getElementById('saldo').value;
+
+
+    fetch('http://localhost:3000/actSaldo', {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json; charset=utf-8',
+            'Connection': 'keep-alive',
+            'Accept': '*',
+        },
+        body: JSON.stringify({ saldo, id }),
+    }).then(data => {
+        if (data.message) console.log("User not found / Verify your credentials")
+        else {
+            location.href = "./../Home/index.html";
         }
     })
 }
 
-window.load = () => { // evento a la pagina para que no recargue la pagina 
-    const form = document.getElementById("loginForm");
-    function handleForm(event) { event.preventDefault();  } 
-    form.addEventListener('submit', handleForm);
+//pagar parqueadero--------------------------------------------
+async function getSaldo(id) {
+
+    return fetch(`http://localhost:3000/saldo/${id}`, {
+        method: 'GET'
+    })
+        .then(res => res.json())
+        .then(data => saldoActual = parseInt(data.saldo) || 0);
+} 
+   
+
+function pagar() {
+    const time = document.getElementById("time").value;
+    const vehicle = document.getElementById("vehicle").value;
+    var rate = 0;
+    if(vehicle=="car"){
+        rate = 500;
+    }else{
+        rate = 200;
+    }
+    console.log(time + " s")
+    total =  rate * time;
     
+    const userData = JSON.parse(sessionStorage.getItem("user"));
+    const saldo = userData.saldo;
+    const id = userData.id;
+    if (saldo >= total) {
+
+        fetch('http://localhost:3000/pagar', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8',
+                'Connection': 'keep-alive',
+                'Accept': '*',
+            },
+            body: JSON.stringify({ total, id }),
+        }).then(data => {
+            if (data.message) console.log("User not found / Verify your credentials")
+            else {
+                location.href = "./../Home/index.html";
+            }
+        })
+
+    } else {
+        window.alert("no tienes dinero suficiente");
+    }
 }

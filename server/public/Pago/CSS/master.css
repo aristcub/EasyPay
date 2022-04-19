@@ -9,7 +9,7 @@ body {
   
   .login-box {
     width: 320px;
-    height: 420px;
+    height: auto;
     background: rgba(86, 4, 102, 0.726);
     color: #fff;
     top: 50%;

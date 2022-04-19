@@ -84,8 +84,18 @@ process.on('SIGINT', () => {
 
 //Actualizar Saldo--------------------------------------
 app.post('/actSaldo', (req) => {
-    const {saldoNuevo, id } = req.body;
-    connection.query('UPDATE users SET saldo = ? WHERE id = ?', [saldoNuevo, id], (err, results) => {
+    const { body } = req;
+    const { saldo, id } = body;
+    connection.query('UPDATE users SET saldo = saldo + ? WHERE id = ?', [saldo, id], (err, results) => {
+        if (err) throw err;
+        console.log('Actualizado', results);
+    });
+});
+//Pagar parqueadero--------------------------------------
+app.post('/pagar', (req) => {
+    const { body } = req;
+    const { total, id } = body;
+    connection.query('UPDATE users SET saldo = saldo - ? WHERE id = ?', [total, id], (err, results) => {
         if (err) throw err;
         console.log('Actualizado', results);
     });
