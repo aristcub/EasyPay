@@ -93,7 +93,7 @@ body {
   }
   
   .login-box input[type="text"]::placeholder, 
-  .login-box input[type="password"]::placeholder
+  .login-box input[type="password"]::placeholder,
   .login-box input[type="number"]::placeholder{
     color: #ddd;
   }
