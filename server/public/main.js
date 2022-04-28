@@ -1,17 +1,17 @@
 let saldoActual;
 
 function getTransactions() {
-  const id = document.getElementById("userId").value;
+const id = document.getElementById("userId").value;
 
-  fetch("http://localhost:3000/transacciones", {
+fetch("http://localhost:3000/transacciones", {
     method: "POST",
     headers: {
-      "Content-Type": "application/json; charset=utf-8",
-      Connection: "keep-alive",
-      Accept: "*",
+    "Content-Type": "application/json; charset=utf-8",
+    Connection: "keep-alive",
+    Accept: "*",
     },
     body: JSON.stringify({ id }),
-  })
+})
     .then((res) => res.json())
     .then((data) => console.log(data));
 }
