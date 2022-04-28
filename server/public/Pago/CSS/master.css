@@ -1,10 +1,17 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: #fff;
+    background: url(../img/fondo.jpg) no-repeat center top;
     background-size: cover;
     font-family: sans-serif;
     height: 100vh;
+  }
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 100%;
   }
   
   .login-box {
@@ -12,26 +19,26 @@ body {
     height: auto;
     background: rgba(86, 4, 102, 0.726);
     color: #fff;
-    top: 50%;
+    top: 60%;
     left: 50%;
-    position: absolute;
+    position: relative;
     transform: translate(-50%, -50%);
     box-sizing: border-box;
-    padding: 70px 30px;
-    border-radius: 20px;
+    padding: 50px 30px;
+    border-radius: 30px;
   }
   
   .login-box .avatar {
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    position: absolute;
+    position: fixed;
     top: -50px;
     left: calc(50% - 50px);
   }
   
   .login-box h1 {
-    margin: 0;
+    margin: 5 ;
     padding: 0 0 25px;
     text-align: center;
     font-size: 22px;
@@ -58,11 +65,41 @@ body {
   
 
   
-  .login-box input[type="text"]::placeholder, .login-box input[type="password"]::placeholder{
+  .login-box input[type="text"], 
+  .login-box input[type="password"], 
+  .login-box input[type="number"],
+  .login-box input[type="month"]{
+  border: none;
+  border-bottom: 1px solid #fff;
+  background: transparent;
+  outline: none;
+  height: 40px;
+  color: #fff;
+  font-size: 16px;
+  }
+
+  .login-box select {
+  border: none;
+  border-bottom: 1px solid #fff;
+  background: transparent;
+  outline: none;
+  height: 40px;
+  color: #fff;
+  font-size: 16px;
+  }
+
+  .login-box option{
+    background: rgba(86, 4, 102, 0.726);
+  }
+  
+  .login-box input[type="text"]::placeholder, 
+  .login-box input[type="password"]::placeholder,
+  .login-box input[type="number"]::placeholder{
     color: #ddd;
   }
   
-  .login-box input[type="button"] {
+  .login-box input[type="button"],
+  .login-box input[type="submit"]{
     border: none;
     outline: none;
     height: 40px;

@@ -4,43 +4,45 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | EasyPay</title>
+    <title>Credit Card</title>
     <link rel="stylesheet" href="CSS/master.css">
     <script src="./../main.js" type="text/javascript"></script>
 </head>
 <body>   
         <div class="login-box">
-        <img class="avatar"src="img/BotonPSE.png" alt="Logo de EasyPay" title="PSE"> 
-        <h1>PSE</h1>
+        <img class="avatar"src="img/visa.jpg" alt="Logo de EasyPay" title="PSE"> 
+        <h1>Credit card payment</h1>
         <form class="form" onsubmit="recarga()" action="" method="POST" id="topUpForm"> 
             <div class="form-group">
-                <label for="top-up">Cantidad a recargar
-                    <input type="number" name="saldo" placeholder="Cantidad a recargar" id="saldo" pattern="^[0-9]{10}" value="">
+                <label for="top-up">Amount to top up
+                    <input type="number" name="saldo" placeholder="$" id="saldo" pattern="^[0-9]{10}" value="">
                 </label>
             </div>
             <div class="form-group">
-                <label for="bank">Seleccione tarjeta
+                <label for="bank">Choose your card
+                    <br>
                     <select name="bank" id="bank">
-                        <option value="Bancolombia">Mastercard</option>
-                        <option value="Bancolombia">Visa</option>
+                        <option value="Mastercard">Mastercard</option>
+                        <option value="Visa">Visa</option>
+                        <option value="American express">American express</option>
                       </select>    
                 </label>
             </div>
             <br>
             <div class="form-group">
-                <label for="">Numero de tarjeta
-                    <input type="number" name="" id="" placeholder="Ingrese Codigo de Usuario" pattern="^[0-9]{10}" value="">
+                <label for="">Card number
+                    <input type="number" name="" id="" placeholder="0000-0000-0000-0000" pattern="^[0-9]{10}" value="">
                 </label>
                 <label for="">CVV
-                    <input type="number" name="" id="" placeholder="Ingrese Codigo de Usuario" pattern="^[0-9]{10}" value="">
+                    <input type="number" name="" id="" placeholder="Security code" pattern="^[0-9]{10}" value="">
                 </label>
-                <label for="">Fecha de vencimiento
-                    <input type="date" name="" id="" placeholder="Ingrese Codigo de Usuario" pattern="^[0-9]{10}" value="">
+                <label for="">Due date
+                    <input type="month" name="" id="" placeholder="junio-2022" pattern="^[0-9]{10}" value="2022-06">
                 </label>
             </div>
             <div class="form-group">
-                <label for="username">Ingrese Id
-                    <input type="number" name="id" id="id" placeholder="Ingrese Codigo de Usuario" pattern="^[0-9]{10}" value="">
+                <label for="username">User code
+                    <input type="number" name="id" id="id" placeholder="ID" pattern="^[0-9]{10}" value="">
                 </label>
             </div>
             
