@@ -1,5 +1,7 @@
 let saldoActual;
 
+
+
 function getTransactions() {
 const id = document.getElementById("userId").value;
 
@@ -137,3 +139,11 @@ function openPopUp() {
     const popUp = document.querySelector(".pop-up");
     popUp.classList.add("active")
 }
+
+
+
+
+
+
+
+
