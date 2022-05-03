@@ -87,17 +87,8 @@ async function getSaldo(id) {
 }
 
 async function pagar() {
-  const time = document.getElementById("time").value;
-  const vehicle = document.getElementById("vehicle").value;
-  var rate = 0;
-  if (vehicle == "car") {
-    rate = 500;
-  } else {
-    rate = 200;
-  }
+  const total = parseInt(document.querySelector(".total").value);
   
-  total = rate * time;
-
   const userData = JSON.parse(sessionStorage.getItem("user"));
   const id = userData.id;
   let saldo = await getSaldo(id);
@@ -108,18 +99,21 @@ async function pagar() {
       body: JSON.stringify({ id, saldo: -total }),
       headers: { "Content-Type": "application/json" },
     }).then((data) => {
-      if (data.message) console.log("User not found / Verify your credentials");
+      if (data.message) 
+        console.log("User not found / Verify your credentials");
       else {
         const balance = document.querySelector(".balance");
-        balance.innerHTML = "$ " + (saldo - total);
         const routes = document.querySelectorAll(".route");
-        closePopUp();
         const times = document.getElementById("time");
+        
+        balance.innerHTML = "$ " + (saldo - total);
         times.value = "0";
-
+        
         routes.forEach((route) => {
           if (route.dataset.route === "") route.firstChild.click();
         });
+        
+        closePopUp();
       }
     });
   } else {

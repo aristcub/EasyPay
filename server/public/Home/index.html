@@ -60,7 +60,7 @@
                             <div class="form-group">
                                 <label for="vehicle">
                                     Type of vehicle
-                                    <select id="vehicle">
+                                    <select id="vehicle" onchange="updateVehicle()">
                                         <option value="car">Car</option>
                                         <option value="motocycle">Motorcycle</option>
                                     </select>
@@ -106,5 +106,6 @@
         </div>
     </main>
     <script src='index.js'></script>
+    <script src='./../utils/types.js'></script>
 </body>
 </html>

@@ -59,7 +59,7 @@ nav {
 .nav-header .logo img {
     border-radius: 50%;
     object-fit: cover;
-    width: 100%;
+    width: 50%;
 }
 
 .nav-tools .profile{ 

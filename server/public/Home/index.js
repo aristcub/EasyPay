@@ -59,21 +59,24 @@
   __generateNavegableContent();
 })();
 
+function updateVehicle(){
+  calculateTotal();
+}
+
 function calculateTotal() {
   const time = document.getElementById("time").value;
-  const vehicle = document.getElementById("vehicle").value;
-  var RATE = 0;
-  if (vehicle == "car") {
-    RATE = 500;
-  } else {
-    RATE = 200;
-  }
+  const vehicleType = document.getElementById("vehicle").value;
+  const vehicle = vehicleType == "car" ? new Car() : new Motocycle();
+  
+  const totalRate = vehicle.getRate() * time;
+
   const totals = document.querySelectorAll(".total");
   totals.forEach(total => {
-    total.innerText = `$ ${RATE * time}`;
-    total.value = `$ ${RATE * time}`;
+    total.innerText = `$ ${totalRate}`;
+    total.value = `$ ${totalRate}`;
   })
 }
+
 
 function logout() {
   sessionStorage.removeItem("user");
