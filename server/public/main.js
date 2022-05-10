@@ -1,21 +1,19 @@
 let saldoActual;
 
+async function getTransactions() {
+  const id = document.getElementById("userId").value;
 
-
-function getTransactions() {
-const id = document.getElementById("userId").value;
-
-fetch("http://localhost:3000/transacciones", {
+  return fetch("http://localhost:3000/transacciones", {
     method: "POST",
     headers: {
-    "Content-Type": "application/json; charset=utf-8",
-    Connection: "keep-alive",
-    Accept: "*",
+      "Content-Type": "application/json; charset=utf-8",
+      Connection: "keep-alive",
+      Accept: "*",
     },
     body: JSON.stringify({ id }),
-})
+  })
     .then((res) => res.json())
-    .then((data) => console.log(data));
+    .then((data) => data);
 }
 
 function doTransaction() {
@@ -89,8 +87,8 @@ async function getSaldo(id) {
 }
 
 async function pagar() {
-  const total = parseInt(document.querySelector(".total").value);
-  
+  const total = parseInt(document.querySelector(".total").value.substring(2));
+
   const userData = JSON.parse(sessionStorage.getItem("user"));
   const id = userData.id;
   let saldo = await getSaldo(id);
@@ -101,20 +99,48 @@ async function pagar() {
       body: JSON.stringify({ id, saldo: -total }),
       headers: { "Content-Type": "application/json" },
     }).then((data) => {
-      if (data.message) 
-        console.log("User not found / Verify your credentials");
+      if (data.message) console.log("User not found / Verify your credentials");
       else {
         const balance = document.querySelector(".balance");
         const routes = document.querySelectorAll(".route");
         const times = document.getElementById("time");
-        
+
         balance.innerHTML = "$ " + (saldo - total);
         times.value = "0";
-        
+
+        //Rendering transactions on DOM
+        const table = document.querySelector(".table");
+
+        const row = document.createElement("div");
+        const type = total < 0 ? "Top up" : "Payment";
+        const formatDate = () => {
+          return new Date().toLocaleDateString("en-US", {
+            month: "long",
+            year: "numeric",
+            day: "numeric",
+            hour: "numeric",
+            minute: "numeric",
+          });
+        };
+        row.innerHTML = `
+            <div class="id">${ localStorage.getItem("lastTransaction") ? parseInt(localStorage.getItem("lastTransaction")) + 1 : 1}</div>
+            <div class="${type.split(" ").join("").toLowerCase()} type">${type}</div>
+            <div class="total">${-total}</div>
+            <div class="date">${formatDate()}</div>
+          `;
+
+        row.classList.add("row","update");
+        localStorage.setItem("lastTransaction", parseInt(localStorage.getItem("lastTransaction")) + 1);
+        table.insertBefore(row, table.childNodes[1]);
+
         routes.forEach((route) => {
-          if (route.dataset.route === "") route.firstChild.click();
+          if (route.dataset.route === "transactions") route.firstChild.click();
         });
-        
+
+        setTimeout(() => { 
+          row.classList.remove("update");
+        }, 5000);
+
         closePopUp();
       }
     });
@@ -123,21 +149,12 @@ async function pagar() {
   }
 }
 
-
 function closePopUp() {
-    const popUp = document.querySelector(".pop-up");
-    popUp.classList.remove("active")
+  const popUp = document.querySelector(".pop-up");
+  popUp.classList.remove("active");
 }
 
 function openPopUp() {
-    const popUp = document.querySelector(".pop-up");
-    popUp.classList.add("active")
+  const popUp = document.querySelector(".pop-up");
+  popUp.classList.add("active");
 }
-
-
-
-
-
-
-
-

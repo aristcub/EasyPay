@@ -1,12 +1,8 @@
-var language = document.querySelector(".language");
-language.addEventListener('click',idioma);
+const language = document.querySelector(".language");
+language.addEventListener("click", () => {
+  let id = language.checked;
 
-function idioma(){
-    let id=language.checked;
-  
-    if (id==true){
-      location.href="es/index.html"
-    } else {
-      location.href="index.html"
-    }
+  if (id == true) {
+    location.href = "es/index.html";
   }
+});

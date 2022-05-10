@@ -1,6 +1,6 @@
 (() => {
   if (!sessionStorage.getItem("user")) location.href = "./../Login-form/";
-  
+
   async function getSaldo(id) {
     return fetch(`http://localhost:3000/saldo/${id}`, {
       method: "GET",
@@ -9,16 +9,61 @@
       .then((data) => (saldoActual = parseInt(data.saldo) || 0));
   }
 
+  async function getTransactions( id ) {
+
+    return fetch("http://localhost:3000/transacciones", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        Connection: "keep-alive",
+        Accept: "*",
+      },
+      body: JSON.stringify({ id }),
+    })
+      .then((res) => res.json())
+      .then((data) => data);
+  }
+
   async function __loadSessionData() {
     const userData = JSON.parse(sessionStorage.getItem("user"));
     const id = document.querySelector(".id");
     const username = document.querySelector(".username");
     const balance = document.querySelector(".balance");
     const saldo = await getSaldo(userData.id);
-
     id.innerHTML = userData.id;
     balance.innerHTML = "$ " + saldo;
     username.innerHTML = userData.name + " " + userData.surname;
+    //Rendering transactions on DOM
+    const transactions = await getTransactions(userData.id);
+    const table = document.querySelector(".table");
+
+    localStorage.setItem("lastTransaction", transactions.length > 0 ? transactions.at(0).id : 0);
+
+    transactions.forEach(({ id, createdAt, saldo }) => {
+      const row = document.createElement("div");
+      const type = saldo > 0 ? "Top up" : "Payment";
+      const formatDate = (date) => {
+        return new Date(date).toLocaleDateString('en-US', {
+          month: 'long',
+          year: 'numeric',
+          day: 'numeric',
+          hour: 'numeric',
+          minute: 'numeric',
+        })
+      }
+
+      row.innerHTML = `
+        <div class="id">${id}</div>
+        <div class="${type.split(' ').join("").toLowerCase()} type">${type}</div>
+        <div class="total">${saldo}</div>
+        <div class="date">${formatDate(createdAt)}</div>
+      `;
+
+      row.classList.add("row");
+
+      table.appendChild(row); //Adding row with transaction data
+    });
+
   }
 
   function __generateNavegableContent() {
@@ -59,7 +104,7 @@
   __generateNavegableContent();
 })();
 
-function updateVehicle(){
+function updateVehicle() {
   calculateTotal();
 }
 
@@ -67,20 +112,17 @@ function calculateTotal() {
   const time = document.getElementById("time").value;
   const vehicleType = document.getElementById("vehicle").value;
   const vehicle = vehicleType == "car" ? new Car() : new Motocycle();
-  
+
   const totalRate = vehicle.getRate() * time;
 
   const totals = document.querySelectorAll(".total");
-  totals.forEach(total => {
+  totals.forEach((total) => {
     total.innerText = `$ ${totalRate}`;
     total.value = `$ ${totalRate}`;
-  })
+  });
 }
-
 
 function logout() {
   sessionStorage.removeItem("user");
   location.href = "./../Login-form";
 }
-
-

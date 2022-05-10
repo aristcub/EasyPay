@@ -18,22 +18,6 @@ app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
     next();
 });
-// resiviendo los parametros 
-
-
-//Routes
-// app.get('/', (req, res) => {
-//     res.send('Hello Migue!!');
-// });
-
-
-//Get all users
-// app.get('/users', (req, res) => {
-//     connection.query('SELECT * FROM users', (err, rows) => {
-//         if (err) throw err;
-//         res.send(rows);
-//     });
-// });
 
 //Get user by id
 // app crea una ruta para nuestro servidor que resive parametros 
@@ -45,7 +29,7 @@ app.get('/users/:id', (req, res) => {
 });
 
 app.post('/transacciones', (req, res) => {
-    connection.query('SELECT * FROM transacciones WHERE id_user = ?', [req.body.id] , (err, rows) => {
+    connection.query('SELECT * FROM transacciones WHERE id_user = ? ORDER BY createdAt DESC', [req.body.id] , (err, rows) => {
         if (err) throw err;
         res.send(rows);
     });

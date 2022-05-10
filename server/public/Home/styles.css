@@ -117,12 +117,15 @@ nav {
 .route {
     cursor: pointer;
     display: flex;
+    flex: 1 1 auto;
 }
 
 .route-link {
     text-decoration: none;
     color: inherit;
     padding: 1rem;
+    text-align: center;
+    width: 100%;
 }
 
 .route-link:hover, .route.active .route-link{
@@ -255,4 +258,74 @@ nav {
     justify-content: flex-end;
     gap: 1rem;
     padding: 0rem .8rem;
+}
+
+.row, .headers{
+    display: flex;
+    gap: 0.6rem;
+    background: rgb(253, 253, 253);
+    border: 1px solid rgb(212, 212, 212);
+}
+
+.headers {
+    background:rgb(122, 27, 201);
+    color: white;
+}
+
+.row > *, .headers > * {
+    padding: 6px 8px;
+    text-align: left;
+}
+
+.row .id, .headers .id{
+    flex: 0 0 3ch;
+}
+
+.row .type, .headers .type{
+    flex: 0 0 8ch;
+}
+
+.row .total, .headers .total{
+    flex: 0 1 8ch;
+}
+
+.row .date, .headers .date{
+    flex: 1 0 auto;
+}
+
+.payment{
+    color: red;
+}
+
+.topup{
+    color: green;
+}
+
+.table {
+    overflow-y: scroll;
+    height: 300px;
+}
+
+.table::-webkit-scrollbar{
+    width: 10px;
+    background: rgba(243, 243, 243, 1);
+}
+
+.table::-webkit-scrollbar-thumb{
+    width: 10px;
+    background: rgba(172, 172, 172, 0.7);
+}
+
+.update {
+    animation:update 1s alternate infinite;
+}
+
+@keyframes update {
+    from {
+        background: rgb(253, 253, 253);
+    }
+
+    to {
+        background: rgb(255, 255, 165);
+    }
 }
