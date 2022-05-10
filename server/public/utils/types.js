@@ -26,12 +26,17 @@ class FacturadorHora extends Facturador{
 }
 
 class Vehicle{
-  constructor(rate){
+  constructor(rate, vehicleType = null){
     this.rate = rate;
+    this.vehicleType = vehicleType;
   }
 
   getRate(){
     return this.rate;
+  }
+
+  setVehicleType(vehicleType){
+    this.vehicleType = vehicleType;
   }
 }
 
@@ -45,4 +50,9 @@ class Motocycle extends Vehicle{
   constructor(rate = 200){
     super(rate);
   }
+}
+
+class VehicleType {
+  getType(){};
+  type; //Automatico o manual
 }
