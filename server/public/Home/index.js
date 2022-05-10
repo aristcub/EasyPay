@@ -1,5 +1,10 @@
 (() => {
   if (!sessionStorage.getItem("user")) location.href = "./../Login-form/";
+  if(localStorage.getItem("lang")) location.href = "./es/";
+  else {
+    document.getElementById("language").checked = false; 
+  }
+  
 
   async function getSaldo(id) {
     return fetch(`http://localhost:3000/saldo/${id}`, {
