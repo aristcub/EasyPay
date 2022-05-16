@@ -52,7 +52,18 @@ class Motocycle extends Vehicle{
   }
 }
 
-class VehicleType {
+class InterfaceVehicleType {
   getType(){};
-  type; //Automatico o manual
+}
+
+class vehicleTypeMotocycle extends InterfaceVehicleType {
+  getType(){
+    return "Motocycle";
+  };
+}
+
+class vehicleTypeCar extends InterfaceVehicleType {
+  getType(){
+    return "Car";
+  };
 }
