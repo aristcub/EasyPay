@@ -19,7 +19,7 @@ body {
   height: 420px;
   background: rgba(86, 4, 102, 0.726);
   color: #fff;
-  top: 50%;
+  top: 55%;
   left: 50%;
   position: absolute;
   transform: translate(-50%, -50%);
@@ -90,4 +90,51 @@ body {
 
 .login-box a:hover {
   color: #fff;
+}
+
+.language{
+  left: 43%;
+  position: absolute;
+}
+
+.en{
+  color:white;
+}
+
+.es{
+  color:#00a1ff;
+}
+
+.check{
+  position: relative;
+  width: 50px;
+}
+
+.check:before{
+  content: " ";
+  position: absolute;
+  width: 50px;
+  height: 25px;
+  background: #333;
+  border-radius: 25px;
+}
+
+.check:after{
+  content: " ";
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  background: #fff;
+  border-radius: 25px;
+  transition: 0.25s;
+  box-sizing: border-box;
+}
+
+.check:checked::after{
+  left: 25px;
+  border: 2px solid #00a1ff
+}
+
+.check:checked:before{
+  background: #00a1ff
 }
