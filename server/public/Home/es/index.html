@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
@@ -22,9 +22,9 @@
                 <div class="nav-tools">
                     <div class="tool">
                         <div class="language">
-                            <span class="en">English</span>
-                            <input type="checkbox" name="language" id="language">
-                            <span class="es">Spanish</span>
+                            <span class="en">Ingles</span>
+                            <input type="checkbox" name="language" id="language" class="check">
+                            <span class="es">Español</span>
                         </div>
                         <div class="profile">
                             <span class="username"></span>
@@ -40,16 +40,16 @@
         <div class="dashboard">
             <div class="dashboard-tools">
                 <div class="routes">
-                    <div class="route" data-route="">Home</div>
-                    <div class="route" data-route="pay">Pay</div>
-                    <div class="route" data-route="top-up">Top Up</div>
-                    <div class="route" data-route="transactions">Transactions</div>
+                    <div class="route" data-route="">Inicio</div>
+                    <div class="route" data-route="pay">Pagar</div>
+                    <div class="route" data-route="top-up">Recargar</div>
+                    <div class="route" data-route="transactions">Transacciones</div>
                 </div>
                 <div class="routeViewer">
                     <div class="view" data-route="">
                         <div class="container">
                             <div class="data-group">
-                                Current balance  <span class="balance"></span>
+                                Saldo actual  <span class="balance"></span>
                             </div>
                         </div>
                     </div>
@@ -58,17 +58,17 @@
                         <div class="container">
                             <div class="form-group">
                                 <label for="time">
-                                    Parking time (Hours)
+                                    Tiempo de parqueo (Horas)
                                     <input type="number" name="time" value="0" onchange="calculateTotal()" id="time"/>
                                 </label>
                             </div>
                             
                             <div class="form-group">
                                 <label for="vehicle">
-                                    Type of vehicle
+                                    Tipo de vehiculo
                                     <select id="vehicle" onchange="updateVehicle()">
-                                        <option value="car">Car</option>
-                                        <option value="motocycle">Motorcycle</option>
+                                        <option value="car">Carro</option>
+                                        <option value="motocycle">Moto</option>
                                     </select>
                                 </label>
                             </div>
@@ -78,7 +78,7 @@
                             </div>
                             
                             <div class="form-group">
-                                <button type="button" onclick="openPopUp()" >Pay</button>
+                                <button type="button" onclick="openPopUp()" >Pagar</button>
                             </div>
                         </div>
                     </div>
@@ -86,10 +86,10 @@
                     <div class="view" data-route="top-up">
                         <div class="container">
                             <div class="form-group">
-                                <button type="button" onclick="location.href='../Pago/PSE.html'">Pay with PSE</button>
+                                <button type="button" onclick="location.href='../Pago/PSE.html'">Pagar con PSE</button>
                             </div>
                             <div class="form-group">
-                                <button type="button" onclick="location.href='../Pago/TarjetaCredito.html'">Pay with <br> Credit card</button>
+                                <button type="button" onclick="location.href='../Pago/TarjetaCredito.html'">Pagar con <br> tarjeta de crédito</button>
                             </div>
                         </div>
                     </div>
@@ -101,10 +101,10 @@
                             </div>
                             <div class="table">
                                 <div class="headers">
-                                    <div class="id">ID</div>
-                                    <div class="type">Type</div>
+                                    <div class="id">Código</div>
+                                    <div class="type">Tipo</div>
                                     <div class="total">Total</div>
-                                    <div class="date">Date</div>
+                                    <div class="date">Fecha</div>
                                 </div>
                                 
                             </div>
@@ -117,13 +117,13 @@
         <div class="pop-up">
             <div class="bg-pop-up"></div>
             <div class="pop-up-body">
-                <div class="pop-up-title">Verify payment</div>
+                <div class="pop-up-title">Verificar pago</div>
                 <div class="pop-up-content">
-                    Are you sure you want to pay the amount: <span class="total" name="total" >$ 0</span>
+                    ¿Estás seguro que quieres pagar el monto de: <span class="total" name="total" >$ 0</span>
                 </div>
                 <div class="pop-up-actions">
-                    <button type="button" onclick="pagar()" class="primary-btn">Pay</button>
-                    <button type="button" onclick="closePopUp()" class="secondary-btn">Cancel</button>
+                    <button type="button" onclick="pagar()" class="primary-btn">Pagar</button>
+                    <button type="button" onclick="closePopUp()" class="secondary-btn">Cancelar</button>
                 </div>
             </div>
         </div>
