@@ -1,12 +1,12 @@
-(() => {
+(() => { //Cargar información en el client-side-rendering
   if (!sessionStorage.getItem("user")) location.href = "./../Login-form/";
-  if(localStorage.getItem("lang")) location.href = "./es/";
+  if(localStorage.getItem("lang")) location.href = "./es/"; //Redirige segun el lenguaje seleccionado
   else {
     document.getElementById("language").checked = false; 
   }
   
 
-  async function getSaldo(id) {
+  async function getSaldo(id) { //Obtiene el saldo actual
     return fetch(`http://localhost:3000/saldo/${id}`, {
       method: "GET",
     })
@@ -14,7 +14,7 @@
       .then((data) => (saldoActual = parseInt(data.saldo) || 0));
   }
 
-  async function getTransactions( id ) {
+  async function getTransactions( id ) { //Obtiene el historial de transacciones del usuario
 
     return fetch("http://localhost:3000/transacciones", {
       method: "POST",
@@ -29,7 +29,7 @@
       .then((data) => data);
   }
 
-  async function __loadSessionData() {
+  async function __loadSessionData() { //Carga la data a la vista del cliente
     const userData = JSON.parse(sessionStorage.getItem("user"));
     const id = document.querySelector(".id");
     const username = document.querySelector(".username");
@@ -44,6 +44,7 @@
 
     localStorage.setItem("lastTransaction", transactions.length > 0 ? transactions.at(0).id : 0);
 
+    // carga las transaccion cuando entramos a la pagina 
     transactions.forEach(({ id, createdAt, saldo }) => {
       const row = document.createElement("div");
       const type = saldo > 0 ? "Top up" : "Payment";
@@ -71,7 +72,7 @@
 
   }
 
-  function __generateNavegableContent() {
+  function __generateNavegableContent() { //Generar componente de rutas
     const routes = document.querySelectorAll(".route");
     const views = document.querySelectorAll(".view");
 
@@ -80,7 +81,7 @@
     const resetRoutes = (event) => {
       currentRoute = event.target.parentNode.dataset.route;
 
-      routes.forEach((route, index) => {
+      routes.forEach((route, index) => { //Segun la ruta activa la muestra
         if (currentRoute === route.dataset.route) {
           route.classList.add("active");
           views[index].classList.add("show-view");
@@ -91,7 +92,7 @@
       });
     };
 
-    routes.forEach((route) => {
+    routes.forEach((route) => { //Crea desde el cliente las vistas de las rutas
       if (currentRoute === route.dataset.route) route.classList.add("active");
       else route.classList.remove("active");
 
@@ -105,29 +106,29 @@
     });
   }
 
-  __loadSessionData();
-  __generateNavegableContent();
+  __loadSessionData(); //Renderizado en cliente
+  __generateNavegableContent();  //Renderizado en cliente
 })();
 
 function updateVehicle() {
   calculateTotal();
 }
 
-function calculateTotal() {
+function calculateTotal() { //Calcular el valor a pagar segun el tipo de vehiculo
   const time = document.getElementById("time").value;
   const vehicleType = document.getElementById("vehicle").value;
   const vehicle = vehicleType == "car" ? new Car() : new Motocycle();
 
   const totalRate = vehicle.getRate() * time;
 
-  const totals = document.querySelectorAll(".total");
+  const totals = document.querySelectorAll(".total"); //Actualiza en las vistas el saldo a pagar
   totals.forEach((total) => {
     total.innerText = `$ ${totalRate}`;
     total.value = `$ ${totalRate}`;
   });
 }
 
-function logout() {
+function logout() { //cierra la sesión del usuario
   sessionStorage.removeItem("user");
   location.href = "./../Login-form";
 }

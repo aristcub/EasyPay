@@ -50,11 +50,9 @@ function signIn(event) {
 }
 
 window.load = () => {
-  const form = document.getElementById("loginForm");
-  function handleForm(event) {
-    event.preventDefault();
-  }
-  form.addEventListener("submit", handleForm);
+  const form = document.getElementById("loginForm"); //Configurar formulario para que no recargue la página
+
+  form.addEventListener("submit", (event) => event.preventDefault());
 };
 //recargar----------------------------------
 function recarga() {
@@ -76,8 +74,7 @@ function recarga() {
     }
   });
 }
-
-//pagar parqueadero--------------------------------------------
+//Obtener saldo actual
 async function getSaldo(id) {
   return fetch(`http://localhost:3000/saldo/${id}`, {
     method: "GET",
@@ -85,6 +82,7 @@ async function getSaldo(id) {
     .then((res) => res.json())
     .then((data) => (saldoActual = parseInt(data.saldo) || 0));
 }
+//pagar parqueadero--------------------------------------------
 
 async function pagar() {
   const total = parseInt(document.querySelector(".total").value.substring(2));
@@ -94,6 +92,7 @@ async function pagar() {
   let saldo = await getSaldo(id);
 
   if (saldo >= total) {
+    //Verificar si el saldo es suficiente para hacer el pago
     fetch("http://localhost:3000/transaccion", {
       method: "POST",
       body: JSON.stringify({ id, saldo: -total }),
@@ -121,23 +120,35 @@ async function pagar() {
             hour: "numeric",
             minute: "numeric",
           });
-        };
+        }; // crea la fila de la transaccion - id- tipo - total - fecha en que se hizo
         row.innerHTML = `
-            <div class="id">${ localStorage.getItem("lastTransaction") ? parseInt(localStorage.getItem("lastTransaction")) + 1 : 1}</div>
-            <div class="${type.split(" ").join("").toLowerCase()} type">${type}</div>
+            <div class="id">${
+              localStorage.getItem("lastTransaction")
+                ? parseInt(localStorage.getItem("lastTransaction")) + 1
+                : 1
+            }</div>
+            <div class="${type
+              .split(" ")
+              .join("")
+              .toLowerCase()} type">${type}</div>
             <div class="total">${-total}</div>
             <div class="date">${formatDate()}</div>
           `;
+        // agrega los estilos - css - update es el que hace la animacion
+        row.classList.add("row", "update");
+        localStorage.setItem(
+          "lastTransaction",
+          parseInt(localStorage.getItem("lastTransaction")) + 1
+        );
+        table.insertBefore(row, table.childNodes[1]); // agrega primero en la tabla
 
-        row.classList.add("row","update");
-        localStorage.setItem("lastTransaction", parseInt(localStorage.getItem("lastTransaction")) + 1);
-        table.insertBefore(row, table.childNodes[1]);
-
+        //Se redirige al historial de transacciones
         routes.forEach((route) => {
           if (route.dataset.route === "transactions") route.firstChild.click();
         });
 
-        setTimeout(() => { 
+        //Crear animacion para la transaccion creada
+        setTimeout(() => {
           row.classList.remove("update");
         }, 5000);
 
@@ -149,12 +160,12 @@ async function pagar() {
   }
 }
 
-function closePopUp() {
+function closePopUp() { //Cierra la ventana de confirmacion
   const popUp = document.querySelector(".pop-up");
   popUp.classList.remove("active");
 }
 
-function openPopUp() {
+function openPopUp() { //Abre la ventana de confirmacion
   const popUp = document.querySelector(".pop-up");
   popUp.classList.add("active");
 }
