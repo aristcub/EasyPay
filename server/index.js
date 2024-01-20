@@ -1,9 +1,12 @@
 const connection = require('./db');
 
+
+
 connection.connect(function(err) {
     if (err) throw err;
     console.log("Connected!");
 });
+
 
 const express = require('express');
 const app = express();
